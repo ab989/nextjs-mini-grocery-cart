@@ -1,3 +1,8 @@
+## Live URL here
+
+You can check the [live site](https://mini-grocery.netlify.app/).
+
+
 ## How to run the project
 
 ```bash
@@ -8,9 +13,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Live URL here
-
-You can check [live site](https://mini-grocery.netlify.app/)
 
 ## Any assumptions or trade-offs I made
 
@@ -24,4 +26,4 @@ You can check [live site](https://mini-grocery.netlify.app/)
 ## AI tools I used
 
 - Used chatGPT for creating Product card component and NavbarHeader component etc.
-- It did a good job for creating component based on good-looking design
+- It did a good job for creating component based on good-looking design.
