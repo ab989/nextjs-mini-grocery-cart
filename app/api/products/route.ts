@@ -27,7 +27,6 @@ export function GET() {
 
     return NextResponse.json(totalProducts);
   } catch (error) {
-    console.error('Error fetching products:', error);
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
   }
 }

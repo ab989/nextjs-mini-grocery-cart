@@ -18,7 +18,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
 
       {/* Product Info */}
       <div className="p-4 flex flex-col gap-2">
-        <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
+        <div className="flex justify-between">
+          <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
+          {product.bogof && <img src="/bogof.png" className="h-7" /> }
+        </div>
 
         {/* Price + Button */}
         <div className="mt-3 flex items-center justify-between">
