@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast"
+
 import { CartProvider } from "@/context/CartContext"
 import NavHeader from "./components/NavHeader";
 
@@ -21,6 +23,7 @@ export default function RootLayout({
           <NavHeader />
           <main>{children}</main>
         </CartProvider>
+        <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );
