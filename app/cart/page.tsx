@@ -1,14 +1,37 @@
 "use client"
 
 import { useCart } from "@/context/CartContext"
+import { ThresholdDiscount } from "@/types/thresholdDiscount"
+import { useEffect, useState } from "react"
 
 export default function CartPage() {
   const { cart, removeFromCart, clearCart, totalItems } = useCart()
 
-  const totalPrice = cart.reduce((sum, item) => {
+  const [thresholdDiscount, setThresholdDiscount] = useState<ThresholdDiscount>({threshold: 0, discountRate: 0})
+
+  useEffect(() => {
+    const fetchDiscount = async () => {
+      const res = await fetch('/api/discount')
+      const data = await res.json()
+      setThresholdDiscount(data)
+    }
+
+    fetchDiscount()
+  }, [])
+
+  // base price before discounts
+  const subTotal = cart.reduce((sum, item) => {
     const effectiveQuantity = item.bogof ? Math.ceil(item.quantity / 2) : item.quantity
     return sum + item.price * effectiveQuantity
   }, 0)
+
+  // check if discount applies
+  const discount =
+    subTotal > thresholdDiscount.threshold
+      ? subTotal * thresholdDiscount.discountRate
+      : 0
+
+  const totalPrice = subTotal - discount
 
   if (cart.length === 0) {
     return (
@@ -64,9 +87,21 @@ export default function CartPage() {
     })}
       </div>
 
-      {/* Total + Clear */}
-      <div className="mt-6 flex justify-between items-center">
-        <p className="text-xl font-bold">Total ({totalItems} items): £{totalPrice.toFixed(2)}</p>
+      {/* Totals */}
+      <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow space-y-2">
+        {discount > 0 && (
+          <>
+            <p className="text-lg font-medium">Subtotal: £{subTotal.toFixed(2)}</p>
+            <p className="text-green-600 font-semibold">
+                Discount ({thresholdDiscount.discountRate * 100}% off over £{thresholdDiscount.threshold}): -£{discount.toFixed(2)}
+            </p>
+          </>
+        )}
+        <p className="text-xl font-bold">Total: £{totalPrice.toFixed(2)}</p>
+      </div>
+
+      {/* Clear Cart */}
+      <div className="mt-4 flex justify-end">
         <button
           onClick={clearCart}
           className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
