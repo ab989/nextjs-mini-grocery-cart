@@ -18,14 +18,10 @@ export default function Home() {
     fetchProducts()
   }, [])
 
-  const handleAddToCart = (product: Product) => {
-    console.log("Added to cart:", product)
-  }
-
   return (
     <div className="p-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {products?.map((product) => (
-        <ProductCard product={product} onAddToCart={handleAddToCart} key={product.code} />
+        <ProductCard product={product} key={product.code} />
       ))}
     </div>
   )

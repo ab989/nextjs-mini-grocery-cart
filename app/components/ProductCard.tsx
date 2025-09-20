@@ -1,12 +1,9 @@
-import React from "react"
 import { Product } from "@/types/product"
+import { useCart } from "@/context/CartContext"
 
-interface ProductCardProps {
-  product: Product
-  onAddToCart: (product: Product) => void
-}
+const ProductCard = ({ product }: { product: Product}) => {
+  const { addToCart } = useCart()
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   return (
     <div className="max-w-sm rounded-2xl shadow-lg overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300">
       {/* Product Image */}
@@ -29,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
             £{product.price.toFixed(2)}
           </span>
           <button
-            onClick={() => onAddToCart(product)}
+            onClick={() => addToCart(product)}
             className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition"
           >
             Add to Cart
