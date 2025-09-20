@@ -1,26 +1,32 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { Product } from '@/types/product';
+import { useState, useEffect } from 'react'
+import { Product } from '@/types/product'
 
-import Image from "next/image";
+import ProductCard from './components/ProductCard'
 
 export default function Home() {
-  const [products, setProducts] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Array<Product>>([])
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch('/api/products');
-      const data = await res.json();
-      setProducts(data);
-    };
+      const res = await fetch('/api/products')
+      const data = await res.json()
+      setProducts(data)
+    }
 
-    fetchProducts();
-  }, []);
+    fetchProducts()
+  }, [])
+
+  const handleAddToCart = (product: Product) => {
+    console.log("Added to cart:", product)
+  }
 
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      Home page
-    </div>
-  );
+    <main className="p-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {products?.map((product) => (
+        <ProductCard product={product} onAddToCart={handleAddToCart} key={product.code} />
+      ))}
+    </main>
+  )
 }
